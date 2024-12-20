@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import BreadCrumb from '@/components/molecules/BreadCrumb.vue';
 import CreateCampaignTemplate from '@/components/templates/CreateCampaignTemplate.vue';
+import { onUnmounted } from 'vue';
+import { useCampaignStore } from '@/common/store/useCampaignStore';
+
+const store = useCampaignStore();
+
+onUnmounted(() => {
+  store.resetCampaign();
+});
 </script>
 <style lang="scss">
 .smb-campaigns-list {

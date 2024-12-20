@@ -150,7 +150,7 @@ onMounted(() => {
       <header-campaigns-list @on-filter-change="onFilterChange" />
       <v-card class="pa-5">
         <template v-if="!isLoading">
-          <smb-table :rows="rows" :columns="columns" :page="page as number" :length="tableLength"
+          <smb-table :rows="rows" :columns="columns" :page="Number(page)" :length="tableLength"
             @pagination:change="onPaginationChange" />
         </template>
         <template v-else>

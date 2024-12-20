@@ -1,10 +1,17 @@
 import { createApp } from 'vue'
 import './style.css'
 
+import App from './App.vue'
+
+const app = createApp(App);
+
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { en, pt } from 'vuetify/locale'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { VStepperVertical, VStepperVerticalItem, VStepperVerticalActions } from 'vuetify/labs/VStepperVertical'
+import { VDateInput } from 'vuetify/labs/VDateInput'
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 import { router } from '@/router'
@@ -25,8 +32,18 @@ const beeFreePlugin = {
 import { createPinia } from 'pinia'
 
 const vuetify = createVuetify({
-  components,
+  components: {
+    ...components,
+    VStepperVertical,
+    VStepperVerticalItem,
+    VStepperVerticalActions,
+    VDateInput,
+  },
   directives,
+  locale: {
+    locale: 'pt',
+    messages: { pt, en }
+  },
   icons: {
     defaultSet: 'mdi',
   },
@@ -34,9 +51,11 @@ const vuetify = createVuetify({
 
 const pinia = createPinia()
 
-import App from './App.vue'
+import "vue-datepicker-next/index.css";
+import "vue-datepicker-next/locale/pt-br";
+import DatePicker from "vue-datepicker-next";
 
-const app = createApp(App);
+app.component("date-picker", DatePicker);
 
 app.use(vuetify)
 app.use(pinia)

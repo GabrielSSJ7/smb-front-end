@@ -50,15 +50,15 @@ const handleClick = () => {
 </style>
 
 <template>
-  <v-container class="smb-button-check border rounded" :class="{ 'smb-button-check__checked': modelValue }"
+  <div class="smb-button-check border rounded" :class="{ 'smb-button-check__checked': modelValue }"
     @click="handleClick">
-    <v-row class="align-center">
+    <v-row>
       <v-col cols="2" :class="{ 'smb-button-check__label_checked': modelValue }">
         <v-icon>{{ icon }}</v-icon>
       </v-col>
-      <v-col cols="10" class="text-body-2" :class="{ 'smb-button-check__label_checked': modelValue }">
+      <v-col cols="10" class="text-body-2" align-self="center" :class="{ 'smb-button-check__label_checked': modelValue }">
         <span>{{ label }}</span>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>

@@ -15,7 +15,14 @@ import { defineComponent, onMounted, inject, ref } from "vue";
 
 export default defineComponent({
   name: "BeeFree",
-  setup() {
+  props: {
+    modelValue: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ["update:modelValue"],
+  setup(_props, { emit }) {
     const template: any = {};
     // const store = useStore();
     const templateData = ref({ metadata: "", html: "" });
@@ -132,23 +139,45 @@ export default defineComponent({
           console.log("ERROR HERE", error);
         }
       });*/
-      await beeFreePlugin
+      const beeFreeData = localStorage.getItem("beefree:data");
+
+      if (beeFreeData) {
+        const beeFreeDataParsed = JSON.parse(beeFreeData);
+        const expiresInSeconds = beeFreeDataParsed.expires_in;
+        if (expiresInSeconds < new Date().getTime()) {
+          localStorage.removeItem("beefree:data");
+          getToken();
+        } else {
+          start();
+        }
+      } else {
+        getToken();
+      }
+    };
+
+    const start = () => {
+      beeFreePlugin.start(beeConfig, template.value || {});
+    };
+
+    const getToken = () => {
+      beeFreePlugin
         .getToken(
           import.meta.env.VITE_APP_BEE_FREE_CLIENT_ID,
           import.meta.env.VITE_APP_BEE_FREE_CLIENT_SECRET
         )
-        .then(() => {
-          beeFreePlugin.start(beeConfig, template.value || {});
+        .then((response: any) => {
+          localStorage.setItem("beefree:data", JSON.stringify(response));
+          start();
         }).finally(() => {
           loading.value = false;
         });
-    };
+    }
 
     const saveTemplate = async (jsonFile: string, htmlFile: string) => {
       templateData.value.metadata = jsonFile;
       templateData.value.html = htmlFile;
 
-      console.log("templateData", templateData.value);
+      emit("update:modelValue", templateData.value);
 
       /*await Template.saveTemplate(
         store.getters["token/data"].templateId,
@@ -210,5 +239,6 @@ export default defineComponent({
   width: 100vw;
   overflow: hidden;
   height: 100vh;
+  width: 98%;
 }
 </style>

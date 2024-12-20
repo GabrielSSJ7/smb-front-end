@@ -43,7 +43,7 @@ defineProps({
     </template>
 
     <template v-if="typeLoading === 'progress' && loading">
-      <v-progress-circular color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular color="#cc00fd" indeterminate></v-progress-circular>
     </template>
   </v-container>
 </template>

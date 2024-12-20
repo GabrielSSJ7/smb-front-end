@@ -99,7 +99,8 @@ const isCurrentRoute = (menuRoute: string) => {
   position: sticky;
   top: 0;
   height: 100vh;
-  width: 230px;
+  min-width: 230px;
+  max-width: 250px;
   transition: width 0.3s ease-out;
   background: #343434;
 
@@ -247,7 +248,7 @@ const isCurrentRoute = (menuRoute: string) => {
     font-size: toRem(13px);
 
     @media (max-width: 1915px) {
-      margin-bottom: idealWidth(22);
+      margin-bottom: idealWidth(25);
     }
   }
 

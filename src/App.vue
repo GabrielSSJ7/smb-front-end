@@ -2,8 +2,10 @@
 import SideMenu from '@/components/organisms/SideMenu.vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useFeedbackStore } from './common/store/useFeedbackStore';
 
 const route = useRoute();
+const store = useFeedbackStore();
 
 const embeddedIframe = computed(() => {
   if (route.meta.iframe) return true;
@@ -52,5 +54,14 @@ const embeddedIframe = computed(() => {
         </router-view>
       </main>
     </div>
+
+   <v-snackbar v-model="store.snackbackError.show" color="error" top>
+      {{ store.snackbackError.message }}
+   </v-snackbar>
+
+   <v-snackbar :timeout="2000" color="success" v-model="store.snackbackSuccess.show">
+      {{ store.snackbackSuccess.message }}
+   </v-snackbar>
+
   </v-theme-provider>
 </template>

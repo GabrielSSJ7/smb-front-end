@@ -54,6 +54,18 @@ export default class CampaignService {
     }
   }
 
+  static async createCampaign(data: Record<string, unknown>): Promise<ICampaign> {
+    try {
+      const response = await httpClient.post('/campaigns', data);
+      return response.data;
+
+    } catch (error) {
+      console.error('CampaignService.createCampaign:', error);
+      throw new Error('CampaignService.createCampaign');
+    }
+
+  };
+
   static async updateCampaign(id: string, data: Record<string, unknown>): Promise<ICampaign> {
     try {
       const response = await httpClient.patch(`/campaigns/${id}`, data);
